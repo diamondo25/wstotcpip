@@ -25,11 +25,10 @@ var upgrader = websocket.Upgrader{
 var upstreamPorts []int
 
 func main() {
-
 	addr := flag.String("addr", ":9000", "http service address")
-
-
 	upstreamPortsString := flag.String("accepted-upstream-ports", "8484,8585", "ports that can be accessed")
+
+	flag.Parse()
 
 	for _, str := range strings.Split(*upstreamPortsString, ",") {
 		port, err := strconv.Atoi(str)
