@@ -1,0 +1,42 @@
+Log output:<br>
+<pre id="log">
+
+</pre>
+
+<script>
+function log(text) {
+    document.getElementById("log").innerText += text + "\r\n";
+}
+
+function buf2hex(blob) { // buffer is an ArrayBuffer
+    var buffer = new Uint8Array(blob);
+    var str = "";
+    for (var i = 0; i < buffer.length; i++) {
+        var byteText = buffer[i].toString(16);
+        if (byteText.length == 1) byteText = '0' + byteText;
+        str += byteText + ' ';
+
+    }
+
+    return str;
+}
+
+log("Connecting...");
+
+var socket = new WebSocket("ws://" + document.location.host + "/?port=8484");
+socket.binaryType = "arraybuffer";
+socket.onopen = function (event) {
+    log("Connected with server!")
+}
+socket.onclose = function (event) {
+    log("Connection closed!")
+}
+
+socket.onerror = function (event) {
+    log("Unable to open connection: " + event)
+}
+
+socket.onmessage = function (event) {
+    log("Received: " + buf2hex(event.data));
+}
+</script>
