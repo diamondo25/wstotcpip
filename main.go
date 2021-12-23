@@ -77,7 +77,7 @@ func main() {
 		}
 		defer wsConn.Close()
 
-		serverConn, err := net.Dial("tcp",  fmt.Sprintf(":%d", port))
+		serverConn, err := net.Dial("tcp",  fmt.Sprintf("127.0.0.1:%d", port))
 		if err != nil {
 			log.Println("Unable to connect to server:", err)
 			return
